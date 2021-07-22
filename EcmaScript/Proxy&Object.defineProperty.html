@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Proxy&Object.defineProperty</title>
+</head>
+
+<body>
+  <div>
+    <p>Object.defineProperty</p>
+    <input type="text" id="ipt">
+    <p id="text"></p>
+  </div>
+  <script>
+    // ==================== Proxy start  ====================
+    // https://mp.weixin.qq.com/s/SPoxin9LYJ4Bp0goliEaUw
+    // 1. 针对对象。在数据拦截上针对整个对象，而不是对象的某个属性，不需要对对象的key进行遍历
+    let obj01 = {
+      name: 'Eason',
+      age: 30
+    }
+    let proxy1 = new Proxy(obj01, {
+      get(target, key, receiver) {
+        console.log('get', key)
+        return Reflect.get(target, key, receiver)
+      },
+      set(target, key, value, receiver) {
+        console.log('set', key, value)
+        return Reflect.set(target, key, value, receiver)
+      }
+    })
+    proxy1.name = 'Zoe' // set name Zoe
+    proxy1.age = 18 // set age 18
+
+    console.log(obj01);
+
+    // 2.支持数组
+    let arr = [1, 2, 3]
+    let proxy2 = new Proxy(arr, {
+      get(target, key, receiver) {
+        console.log('get', key)
+        return Reflect.get(target, key, receiver)
+      },
+      set(target, key, value, receiver) {
+        console.log('set', key, value)
+        return Reflect.set(target, key, value, receiver)
+      }
+    })
+    proxy2.push(4);
+    console.log(arr);
+    proxy2.reverse();
+    console.log(arr);
+
+    // 3. 嵌套对象
+    let obj02 = {
+      info: {
+        name: 'eason',
+        blogs: ['webpack', 'babel', 'cache']
+      }
+    }
+    let handler = {
+      get(target, key, receiver) {
+        console.log('get', key)
+        // 递归创建并返回
+        if (typeof target[key] === 'object' && target[key] !== null) {
+          return new Proxy(target[key], handler)
+        }
+        return Reflect.get(target, key, receiver)
+      },
+      set(target, key, value, receiver) {
+        console.log('set', key, value)
+        return Reflect.set(target, key, value, receiver)
+      }
+    }
+    let proxy3 = new Proxy(obj02, handler)
+    // 以下两句都能够进入 set
+    proxy3.info.name = 'Zoe'
+    proxy3.info.blogs.push('proxy')
+
+    console.log(obj02);
+
+    // ==================== Proxy end  ====================
+
+
+    // ==================== Object.defineProperty start ====================
+    var form = {};
+    var iptDom = document.getElementById('ipt')
+    var textDom = document.getElementById('text')
+    iptDom.addEventListener('keyup', function(e) {
+      form.ipt = e.target.value
+    }, false)
+
+    Object.defineProperty(form, 'ipt', {
+      get: function(value) {
+        console.log('get===' + value);
+      },
+      set: function(value) {
+        textDom.innerHTML = value
+        console.log('set===' + value);
+      }
+    })
+
+    console.log(form.ipt);
+
+    // 1. Object.defineProperty缺点
+    // a. 不能监听数组变化，vue的做法是把数组方法重写了
+    const methodsToPatch = ['push', 'pop', 'shift', 'unshift', 'splice', 'sort', 'reverse']
+    const arrayAugmentations = []
+    methodsToPatch.forEach(function(method) {
+      // 这里是原生Array的原型方法
+      const original = Array.prototype[method]
+      // 将push/pop等封装好的方法定义在对象 arrayAugmentations 的属性上
+      // 注意：是实例属性而非原型属性
+      arrayAugmentations[method] = function() {
+        console.log('我被改变了');
+        // 调用对应的原生方法并返回结果
+        return original.apply(this, arguments)
+      }
+    })
+
+    console.log(arrayAugmentations)
+
+    let list = ['a', 'b', 'c', 'd']
+    // 将我们监听的数组的原型指针指向上面定义的空数组对象
+    list.__proto__ = arrayAugmentations
+    // 这样就能在调用 push, pop 这些方法时走进我们刚定义的方法，多了一句 console.log
+    list.push('e') // 输出内容：我被改变了，代表已监听到变化
+    console.log(list)
+
+    // 这个 list2 是个普通的数组，所以调用 push 不会走到我们的方法里面
+    let list2 = ['w', 'x', 'y']
+    list2.push('z')
+    console.log(list2) // 不输出内容，说明没有到定义的方法里
+
+    // b. 必须遍历对象的每个属性，使用Object.defineProperty配合Object.keys()遍历
+    let obj11 = {
+      a: 1,
+      b: 2,
+      c: 3
+    }
+    Object.keys(obj11).forEach(function(key) {
+      Object.defineProperty(obj11, key, {
+        value: obj11[key], // 该属性对应的值。可以是任何有效的 JavaScript 值（数值，对象，函数等）,默认undefined
+        enumerable: '', // 当且仅当该属性的 enumerable 键值为 true 时，该属性才会出现在对象的枚举属性中 默认false
+        writable: true, // 当且仅当该属性的 writable 键值为 true 时，属性的值，也就是上面的 value，才能被赋值运算符改变 默认false
+        configurable: true // 当且仅当该属性的 configurable 键值为 true 时，该属性的描述符才能够被改变，同时该属性也能从对应的对象上被删除 默认false
+      })
+    })
+
+    obj11.a = 4
+    obj11.b = 5
+    obj11.c = 6
+    console.log(obj11)
+
+    // c. 必须深层遍历嵌套的对象，递归绑定key
+    let obj12 = {
+      name: {
+        firstName: 'wu',
+        lastName: 'halo'
+      }
+    }
+    // ==================== Object.defineProperty end  ====================
+  </script>
+</body>
+
+</html>

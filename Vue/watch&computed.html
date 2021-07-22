@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>watch&computed</title>
+</head>
+
+<body>
+  <div id="app">
+    <input type="text" v-model="name" placeholder="搜索姓名" /> <br />
+    <ul>
+      <li v-for="(item, index) in fillNameList" :key="index">
+        {{ index }} -- {{ item.name }} -- {{ item.age }}
+      </li>
+    </ul>
+    <button @click="sorting=1">年龄升序</button>
+    <button @click="sorting=2">年龄降序</button>
+    <button @click="sorting=0">原本顺序</button>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script>
+    // watch&computed
+    // 使用场景：
+    //      computed 计算属性
+    //        1. 可以在里面声明一些函数，必须有return返回
+    //        2. 如用到data中的数据，这些数据发生改变后会重新执行计算属性函数，将最新的计算属性结果返回
+    //        3. 执行时机：初始化，data中的数据发生改变会重新计算
+    //        4. 页面中使用计算属性，template中使用{{计算属性函数名}}
+    //        5. 计算属性缓存，多次读取计算属性的值只执行一次，缓存机制 => {计算属性名：计算结果} 以键值对的数据格式进行缓存
+    //      watch 监听属性
+    //        1. 可以监听data中的属性和一些非DOM元素的改变
+    //        2. 可以获取数据改变前后的值
+    //        3. 监听路由 hash
+    // 区别
+    //       computed 对方法中所使用到的data中的属性名做监听，必须return
+    //       watch 只对data中单个属性做监听，无需return
+    const vm = new Vue({
+      el: "#app",
+      data: {
+        name: "",
+        nameList: [
+          { name: "Tom", age: 18 },
+          { name: "Bob", age: 19 },
+          { name: "Rose", age: 17 },
+          { name: "Bem", age: 20 }
+        ],
+        // 排序
+        sorting: 0 // 0 原本顺序 ， 1 升序 ， 2 降序
+      },
+      computed: {
+        fillNameList() {
+          const { nameList, name, sorting } = this;
+          // 新数组
+          let fillList = nameList.filter(
+            val => val.name.indexOf(name) != -1
+          );
+          // 排序
+          if (sorting !== 0) {
+            fillList.sort((a, b) => {
+              // 如果返回负数 a在前(降序) 如果返回正数 b在前(升序)
+              // 升序
+              if (sorting === 1) {
+                return a.age - b.age;
+              }
+              // 降序
+              if (sorting === 2) {
+                return b.age - a.age;
+              }
+            });
+          }
+          return fillList;
+        }
+      }
+    });
+  </script>
+</body>
+
+</html>
