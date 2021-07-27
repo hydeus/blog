@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>debounce&throttle</title>
+</head>
+
+<body>
+  <script>
+    // debounce 防抖 
+    // 在事件被触发n秒后再执行回调，如果在这n秒内又被触发，则重新计时；在规定的时间内执行多次就只执行最后一次生效
+    // 如：
+    // 联想搜索
+    /**
+     *
+     * @param fn {Function}   实际要执行的函数
+     * @param delay {Number}  延迟时间，也就是阈值，单位是毫秒（ms）
+     *
+     * @return {Function}     返回一个“去弹跳”了的函数
+     */
+    function debounce(fn, delay) {
+      let timer
+      return function() {
+        if (timer) clearTimeout(timer)
+        timer = setTimeout(function() {
+          fn.apply(this, arguments)
+        }, delay)
+      }
+    }
+
+    // throttle 节流
+    // 规定在一个单位时间内，只能触发一次函数。如果这个单位时间内触发多次函数，只有一次生效
+    // 如：
+    // 拖拽场景：固定时间内只执行一次，防止超高频次触发位置变动
+    // 缩放场景：监控浏览器resize
+    // 动画场景：避免短时间内多次触发动画引起性能问题
+    // 1. 定义一个标识位
+    function throttle(fn, delay) {
+      let flag = true
+      return function() {
+        if (!flag) return
+        flag = false
+        setTimeout(function() {
+          flag = true
+          fn.apply(this, arguments)
+        }, delay)
+      }
+    }
+    // 2. 时间戳
+    function throttleTime(fn, wait) {
+      let previous = 0
+      return function() {
+        let now = +new Date()
+        if (now - previous > wait) {
+          fn.apply(this, arguments)
+          previous = now
+        }
+      }
+    }
+
+    window.addEventListener('resize', throttle(() => {
+      console.log('throttle')
+    }, 2000))
+  </script>
+</body>
+
+</html>
