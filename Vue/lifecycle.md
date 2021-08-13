@@ -1,0 +1,14 @@
+# vue生命周期
+##### 分为4大步：
+1. 创建
+    - beforeCreate
+    - created
+2. 挂载
+    - beforeMount
+    - mounted
+3. 更新
+    - beforeUpdate
+    - updated
+4. 销毁
+    - beforeDestroy
+    - destroyed

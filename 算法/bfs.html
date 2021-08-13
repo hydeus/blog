@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>广度优先遍历</title>
+</head>
+
+<body>
+  <script src="./data.js"></script>
+  <script>
+    // 广度优先遍历
+
+    function bfs(data) {
+      // 存放结果的数组
+      const result = [];
+      // 当前队列为全部数组
+      const queue = JSON.parse(JSON.stringify(data));
+      // 循环条件，队列不能为空
+      while (queue.length > 0) {
+        // 第1个节点出队列
+        const node = queue.shift();
+        // 存放结果数组
+        result.push(node.id);
+        node.children.forEach(child => queue.push(child));
+      }
+
+      return result;
+    }
+
+    console.log(`广度优先遍历栈实现：${bfs(data)}`);
+  </script>
+</body>
+
+</html>

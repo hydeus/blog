@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>深度优先遍历</title>
+</head>
+
+<body>
+  <script src="./data.js"></script>
+  <script>
+    // 深度优先遍历
+    /**
+     * 基本思路
+     * 1. 从最顶点开始
+     * 2. 从未被访问的邻节点中选取一个顶点，从选取的顶点做深度优先遍历
+     * 3. 重复以上两步操作，直至所有路径和节点被访问完
+     */
+    // - 递归实现，找出节点ID
+    function dfs(data) {
+      const result = [];
+
+      const dfs = data => {
+        // 遍历数组
+        data.forEach(element => {
+          // 将当前节点id放进结果中
+          result.push(element.id);
+          // 当前节点有子节点，则递归调用
+          if (element.children && element.children.length > 0) {
+            dfs(element.children);
+          }
+        });
+      }
+
+      dfs(data);
+
+      return result;
+    }
+
+    console.log(`深度优先遍历递归实现：${dfs(data)}`);
+
+    //- 栈实现
+    function dfsStack(data) {
+      // 存放结果的数组
+      const result = [];
+      // 当前栈内为全部数组
+      const stack = JSON.parse(JSON.stringify(data));;
+      // 循环条件，栈不为空
+      while (stack.length !== 0) {
+        // 最上层节点出栈
+        const node = stack.shift(); // 这个地方回改变原有数组的数据，第一次就只有第一个元素
+        // 存放节点
+        result.push(node.id);
+        node.children.slice().reverse().forEach(child => stack.unshift(child)); // 从头部插入进栈元素
+      }
+
+      return result;
+    }
+
+    console.log(`深度优先遍历栈实现：${dfsStack(data)}`);
+  </script>
+</body>
+
+</html>
