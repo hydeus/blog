@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>事件循环</title>
+</head>
+
+<body>
+  <script>
+    // js 单线程
+    // 执行栈
+    // 从上到下依次执行
+
+    // 任务对列
+    // 同步代码先执行
+    // promise 是属于同步代码
+    // 异步代码放在event table中执行，完成后放在event queue(事件对列)中；等待同步代码执行完成后，js会调用event queue中的执行结果放在执行栈同执行
+
+    // 异步代码分为：
+    //            宏任务（script, setTimeout，setInterval，setImmediate，requestAnimationFrame，I/O，UI渲染）
+    //            微任务（promise.then，promise.catch，promise.finally，process.nextTick，MutationObserve，queueMicrotask）
+
+    // 事件循环
+    // 执行完一次宏任务就会去执行微任务（及清空微任务对列）
+
+    // console.log('script start')
+
+    // async function async1() {
+    //   await async2() // await相当于new Promise，await后面的代码相当于then里面的回调
+    //   console.log('async1 end') 
+    // }
+    // async function async2() {
+    //   console.log('async2 end')
+    // }
+
+    // async1()
+
+    // setTimeout(function() {
+    //   console.log('setTimeout')
+    // }, 0)
+
+    // new Promise(resolve => {
+    //   console.log('Promise')
+    //   resolve()
+    // }).then(function() {
+    //   console.log('promise1')
+    // }).then(function() {
+    //   console.log('promise2')
+    // })
+
+    // console.log('script end')
+
+    // script start
+    // async2 end
+    // Promise
+    // script end
+    // async1 end
+    // promise1
+    // promise2
+    // setTimeout
+
+
+    // 一轮只执行一个宏任务？然后就去清空微任务对列
+    // console.log('start');
+    // setTimeout(() => {
+    //   console.log('children2');
+    //   Promise.resolve().then(() => {
+    //     console.log('children3');
+    //   })
+    // }, 0)
+
+    // new Promise(function(resolve, reject) {
+    //   console.log('children4');
+    //   setTimeout(function() {
+    //     console.log('children5');
+    //     resolve('children6')
+    //   }, 0)
+    // }).then(res => {
+    //   console.log('children7');
+    //   setTimeout(() => {
+    //     console.log(res);
+    //   }, 0)
+    // })
+
+    // start
+    // children4
+    // children2
+    // children3
+    // children5
+    // children7
+    // children6
+
+    // const p = function() {
+    //   return new Promise((resolve, reject) => {
+    //     const p1 = new Promise((resolve, reject) => {
+    //       setTimeout(() => {
+    //         resolve(1)
+    //       }, 0)
+    //       resolve(2)
+    //     })
+
+    //     p1.then(res => {
+    //       console.log(res);
+    //     })
+
+    //     console.log(3);
+    //     resolve(4);
+    //   })
+    // }
+
+    // p().then(res => {
+    //   console.log(res);
+    // })
+
+    // console.log('end');
+
+    // 3
+    // end
+    // 2
+    // 4
+
+    // console.log('start')
+
+    // setTimeout(_ => console.log(4))
+
+    // new Promise(resolve => {
+    //   resolve()
+    //   console.log(1)
+    // }).then(_ => {
+    //   console.log(3)
+    // })
+
+    // console.log(2)
+
+    // start
+    // 1 
+    // 2
+    // 3
+    // 4
+
+    // 1. 在主线程上添加宏任务与微任务
+    // console.log('-------start--------');
+
+    // setTimeout(() => {
+    //   console.log('setTimeout'); // 将回调代码放入另一个宏任务队列
+    // }, 0);
+
+    // new Promise((resolve, reject) => {
+    //   for (let i = 0; i < 5; i++) {
+    //     console.log(i);
+    //   }
+    //   resolve()
+    // }).then(() => {
+    //   console.log('Promise实例成功回调执行'); // 将回调代码放入微任务队列
+    // })
+
+    // console.log('-------end-----------');
+
+    // start
+    // 0
+    // 1
+    // 2
+    // 3
+    // 4
+    // end // 第一次宏任务执行完了
+    // Promise实例成功回调执行 // 微任务已清空
+    // setTimeout // 第二次宏任务开始
+
+    // 2. 在微任务中创建微任务，在微任务队列执行时创建的微任务，还是会排在主线程上创建出的宏任务之前执行
+    // setTimeout(_ => console.log(4))
+
+    // new Promise(resolve => {
+    //   resolve()
+    //   console.log(1)
+    // }).then(_ => {
+    //   console.log(3)
+    //   Promise.resolve().then(_ => {
+    //     console.log('before timeout')
+    //   }).then(_ => {
+    //     Promise.resolve().then(_ => {
+    //       console.log('also before timeout')
+    //     })
+    //   })
+    // })
+
+    // console.log(2)
+
+    // 1
+    // then是微任务，放在微任务对列中
+    // 2 
+    // 同步代码执行完了
+    // 异步代码开始，setTimeout是宏任务放在宏任务对列中，宏任务执行完了就会去清空微任务对列
+    // 3 
+
+    // before timeout
+    // also before timeout
+    // 4
+
+    // 3. 宏任务中创建微任务：主线宏任务执行完成后再执行微任务
+    // setTimeout(() => {
+    //   console.log('timer_1');
+    //   setTimeout(() => {
+    //     console.log('timer_3')
+    //   }, 0)
+    //   new Promise(resolve => {
+    //     resolve()
+    //     console.log('new promise')
+    //   }).then(() => {
+    //     console.log('promise then')
+    //   })
+    // }, 0)
+
+    // setTimeout(() => {
+    //   console.log('timer_2')
+    // }, 0)
+
+    // console.log('========== Sync queue ==========')
+    // ========== Sync queue ==========
+    // timer_1
+    // new promise
+    // promise then
+    // timer_2
+    // timer_3
+
+    // 4. 微任务队列中创建的宏任务
+    // 宏任务1
+    new Promise((resolve) => {
+      console.log('new Promise(macro task 1)');
+      resolve();
+    }).then(() => {
+      // 微任务1
+      console.log('micro task 1');
+      setTimeout(() => {
+        // 宏任务3
+        console.log('macro task 3');
+      }, 0)
+    })
+
+    setTimeout(() => {
+      // 宏任务2
+      console.log('macro task 2');
+    }, 1000)
+
+    console.log('========== Sync queue(macro task 1) ==========');
+
+    // new Promise(macro task 1)
+    // ========== Sync queue(macro task 1) ==========
+    // micro task 1
+    // macro task 3
+    // macro task 2
+
+    // 总结：微任务队列优先于宏任务队列执行，微任务队列上创建的宏任务会被后添加到当前宏任务队列的尾端，微任务队列中创建的微任务会被添加到微任务队列的尾端。
+    // 只要微任务队列中还有任务，宏任务队列就只会等待微任务队列执行完毕后再执行
+
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>call&apply&bind</title>
+</head>
+
+<body>
+  <script>
+    var dog = {
+      name: '二哈',
+      age: 1,
+      message: function(doing = '叫') {
+        return `这是${this.name}，今年${this.age}岁了，喜欢做${doing}。`
+      }
+    }
+
+    console.log(dog.message())
+
+    var cat = {
+      name: '三哈',
+      age: 2
+    }
+
+    console.log(dog.message.call(cat, '吃饭'))
+    console.log(dog.message.apply(cat, ['睡觉']))
+    console.log(dog.message.bind(cat, '打豆豆')()) // 需要用变量接收再执行
+
+    // 手写一个bind方法
+    Function.prototype.newBind = function() {
+      var self = this
+      var [obj, ...rest] = arguments
+      return function() {
+        return self.call(obj, ...rest)
+      }
+    }
+
+    console.log(dog.message.newBind(cat, '打豆豆1')())
+
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>typeof&instanceof</title>
+</head>
+
+<body>
+  <script>
+    // 基本数据类型(存在栈中) Null Undefined Boolean String Number Symbol BigInt
+    // 引用数据类型(存在堆中) object
+
+    // typeof 检测返回对应的数据类型
+    console.log(typeof true); // boolean
+    console.log(typeof 123); // number
+    console.log(typeof undefined); // undefined
+    console.log(typeof 'xxx'); // string
+
+    console.log(typeof null); // object 为什么不会null
+    // 计算机，typeof判断类型的时候会检测机器码后3位，如果后3位为‘000’就会返回object
+    // null 的机器码全是0 0000...000 => object
+    // 引用类型的机器码后3位都是0，所以typeof引用类型时返回的是object
+
+    console.log(typeof []); // object 引用类型
+    console.log(typeof new Date()); // object 引用类型
+    console.log(typeof {}); // object 引用类型
+
+    console.log(typeof function(){}); // function 为什么不是object?
+    console.log(typeof Array); // function 为什么不是object?
+    // typeof 引用类型 => object || function
+    // js在最初定义的时候，把引用类型分为了两类
+    // 如果内部用call方法就返回function，反之返回object
+    // typeof 引用类型 =》引用类型有内置call方法 ？function : object
+
+    // example
+    let str1 = 'xxx'; // 变量赋值开辟的是一个栈（stack）空间，栈空间就是基本的数据类型
+    console.log(typeof str1); // string 
+
+    let str2 = new String('xxx'); // new实例化开辟的是一个堆（heap）空间，堆空间就是引用类型
+    console.log(str2);
+    console.log(typeof str2); // object 没有内置call方法
+
+    // typeof 少null 多function
+
+
+    // instanceof 返回true || false 检测构造函数的prototype是否存在某个实例对象上 
+    // A instanceof B A对象是不是B实例化的对象
+    console.log([] instanceof Array); // true
+    console.log({} instanceof Object); // true
+
+    function Person(name) {
+      this.name = name
+    }
+
+    let xiaoming = new Person('halo');
+    console.log(xiaoming instanceof Person); // true
+    // A instanceof B, B instanceof C 根据原型链 一层一层的往上找
+
+    // 这种方式检测数据类型更准确
+    console.log(Object.prototype.toString.call([])); // [object Array]
+
+  </script>
+</body>
+
+</html>

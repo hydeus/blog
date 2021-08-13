@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>深拷贝&浅拷贝</title>
+</head>
+
+<body>
+  <script>
+    // https://mp.weixin.qq.com/s/MPfJeJpZI27I1q9hUGQwOQ
+    // 1. 基本数据类型
+    // 存储在栈（stack）内存中，栈具有先进后出的特点，基本数据类型占用空间小、大小固定，通过按值来访问，属于被频繁使用的数据
+    // Null Undefined Boolean Number String BigInt Symbol
+
+    // 2. 引用数据类型 Object 
+    // 引用数据类型存放在堆（heap）内存中，可以直接进行访问和修改
+    // 引用数据类型占据空间大、大小不固定，存放在栈中会有性能的问题
+    // 引用数据类型在栈中保存了一份指针，该指针指向对应的数据在堆中的起始地址，当解释器寻找引用值时，会首先检索其在栈中的地址，通过地址从堆中获得数据。
+    // Function Date Array RegExp...都是引用类型Object
+
+    // 3. 浅拷贝
+    //  a. 展开运算符（...）
+    let obj1 = { name: '烟花渲染离别' };
+    let obj2 = { ...obj1 };
+    obj2.name = '七宝';
+    console.log(obj1.name); // 烟花渲染离别
+    console.log(obj2.name); // 七宝
+
+    //  b. Object.assign()
+    let obj3 = { name: '烟花渲染离别' };
+    let obj4 = Object.assign({}, obj3);
+    obj3.name = '七宝';
+    console.log(obj3.name); // 烟花渲染离别
+    console.log(obj4.name); // 七宝
+
+    //  c. concat
+    let arr1 = [1, 2];
+    let arr2 = arr1.concat();
+    arr1.push(3);
+    console.log(arr1); // [1, 2, 3]
+    console.log(arr2); // [1, 2]
+    //  d. slice
+    let arr3 = [1, 2];
+    let arr4 = arr3.slice();
+    arr3.push(3);
+    console.log(arr3); // [1, 2, 3]
+    console.log(arr4); // [1, 2]
+    //  e. Object.create()
+
+    // 4. 浅拷贝的问题
+    // 如果拷贝的对象中属性有引用类型值的话，浅拷贝就不能达到预期的完全复制隔离的效果了
+    let obj5 = { name: '烟花渲染离别', hobby: ['看动漫'] };
+    let obj6 = { ...obj5 };
+    obj6.name = '七宝';
+    console.log(obj5.name); // 烟花渲染离别
+    console.log(obj6.name); // 七宝
+
+    obj6.hobby.push('打球');
+    console.log(obj5.hobby); // ['看动漫', '打球']
+    console.log(obj6.hobby); // ['看动漫', '打球']
+    console.log(obj5.hobby === obj6.hobby); // true
+
+    // 5. 深拷贝
+    //  a. 利用JSON.parse(JSON.stringify())
+    //  基于JSON.stringify将对象先转成字符串，再通过JSON.parse将字符串转成对象，此时对象中每个层级的堆内存都是新开辟的
+    //  这种方法虽然简单，但它还有几个缺陷：
+    //    不能解决循环引用的问题
+    //    无法拷贝特殊对象， 比如： RegExp、 BigInt、 Date、 Set、 Map等
+    let obj7 = { name: '烟花渲染离别', hobby: ['看动漫'] };
+    let obj8 = JSON.parse(JSON.stringify(obj7));
+    obj7.hobby.push('打球');
+    console.log(obj7.hobby); // ['看动漫', '打球']
+    console.log(obj8.hobby); // ['看动漫']
+
+    //  b. 实现deepClone
+    const arrayTag = '[object Array]'
+    const objectTag = '[object Object]'
+    const mapTag = '[object Map]'
+    const setTag = '[object Set]'
+    const functionTag = '[object Function]';
+    const boolTag = '[object Boolean]'
+    const dateTag = '[object Date]'
+    const errorTag = '[object Error]'
+    const numberTag = '[object Number]'
+    const regexpTag = '[object RegExp]'
+    const stringTag = '[object String]'
+    const symbolTag = '[object Symbol]'
+
+    function cloneArray(array) {
+      const { length } = array;
+      const result = new array.constructor(length);
+
+      if (length && typeof array[0] === 'string' && hasOwnProperty.call(array, 'index')) {
+        result.index = array.index;
+        result.input = array.input;
+      }
+      return result;
+    }
+
+    function cloneSymbol(symbol) {
+      return Object(Symbol.prototype.valueOf.call(symbol));
+    }
+
+    function cloneRegExp(regexp) {
+      const reFlags = /\w*$/;
+      const result = new regexp.constructor(regexp.source, reFlags.exec(regexp));
+      result.lastIndex = regexp.lastIndex;
+      return result;
+    }
+
+    function initCloneTargetByTag(target, tag) {
+      const Ctor = target.constructor;
+      switch (tag) {
+        case boolTag:
+        case dateTag:
+          return new Ctor(+target);
+
+        case numberTag:
+        case stringTag:
+        case errorTag:
+          return new Ctor(target);
+
+        case objectTag:
+        case mapTag:
+        case setTag:
+          return new Ctor();
+
+        case arrayTag:
+          return cloneArray(target);
+
+        case symbolTag:
+          return cloneSymbol(target);
+
+        case regexpTag:
+          return cloneRegExp(target);
+      }
+    }
+
+    function isObject(target) {
+      const type = typeof target;
+      return target !== null && (type === 'object' || type === 'function');
+    }
+
+    function deepClone(target, cache = new WeakSet()) {
+      if (!isObject(target)) return target; // 拷贝基本类型值
+
+      if (cache.has(target)) return target;
+
+      cache.add(target);
+
+      const tag = Object.prototype.toString.call(target);
+      let cloneTarget = initCloneTargetByTag(target, tag); // 使用拷贝对象的构造方法创建对应类型的数据
+
+      if (tag === mapTag) {
+        target.forEach((value, key) => {
+          cloneTarget.set(key, deepClone(value, map));
+        });
+        return cloneTarget;
+      }
+
+      if (tag === setTag) {
+        target.forEach(value => {
+          cloneTarget.add(deepClone(value, map));
+        });
+        return cloneTarget;
+      }
+
+      if (tag === functionTag) {
+        return target;
+      }
+
+      Reflect.ownKeys(target).forEach(key => {
+        cloneTarget[key] = deepClone(target[key], cache); // 递归拷贝属性
+      });
+
+      return cloneTarget;
+    }
+
+    let obj9 = {
+      arr: [1,2,3]
+    }
+    let obj10 = deepClone(obj9);
+    obj9.arr.push(4);
+    console.log(obj9);
+    console.log(obj10);
+
+    function deepCopy(source) {
+      if (!isObject(source)) return source // 非对象返回自身
+      var target = Array.isArray(source) ? [] : {}
+      for(let key in source) {
+        if (source.hasOwnProperty(key)) {
+          if (isObject(source[key])) {
+            target[key] = deepCopy(source[key])
+          } else {
+            target[key] = source[key]
+          }
+        }
+      }
+      return target
+    }
+
+    let obj11 = {
+      arr: [1,2,3]
+    }
+    let obj12 = deepCopy(obj11);
+    obj11.arr.push(4);
+    console.log(obj11);
+    console.log(obj12);
+  </script>
+</body>
+
+</html>

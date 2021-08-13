@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>变量提升&函数提升</title>
+</head>
+
+<body>
+  <script>
+    // https://juejin.cn/post/6847902220541755405
+
+    console.log(a) // undefined
+    var a = 100
+
+    function test() {
+      var a
+      a = 200
+      console.log(a) // 200
+      console.log(fn) // undefined
+    }
+
+    test()
+    // function fn() {}
+    var fn = function() {}
+    console.log(a) // 100
+
+    // 以上代码执行时会先预解析到下面的方式
+    // var a // 变量提升。先声明变量，然后再赋值，所以才会出现第一个a为undefined
+    // a = 100
+
+    // var fn
+    // fn = function() {} // 函数提升，跟a类似
+
+    // function test() {
+    //   var a
+    //   a = 200
+    //   console.log(a) // 200
+    //   console.log(fn) // undefined
+    // }
+
+    // test()
+    // console.log(a)
+
+    var b = 2
+    if (true) {
+      let a = 2
+      var b = 3
+      var c = 4
+      const d = 5
+    }
+
+    // console.log(a) // 报错
+    console.log(b) // 3
+    console.log(c) // 4
+    console.log(d) // undefined 这里存在变量提升
+    var d = 6
+
+    // 上面 d 解释为下面
+    var f
+    console.log(f) // undefined
+    f = 6
+  </script>
+</body>
+
+</html>

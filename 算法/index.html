@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>排序算法</title>
+</head>
+
+<body>
+  <script>
+    // https://www.zhihu.com/question/23148377
+
+    var arr = [1, 2, 5, 90, 23, 4, 100, 9]
+
+    // 冒泡排序
+    function bubbleSort(arr) {
+      for (var i = 0; i < arr.length; i++) {
+        for (var j = i + 1; j < arr.length; j++) {
+          if (arr[i] > arr[j]) {
+            var temp = arr[i]
+            arr[i] = arr[j]
+            arr[j] = temp
+          }
+        }
+      }
+
+      return arr
+    }
+    console.log(bubbleSort(arr))
+
+    // 
+  </script>
+</body>
+
+</html>

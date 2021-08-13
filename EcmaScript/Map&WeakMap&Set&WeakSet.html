@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Map&WeakMap&Set&WeakSet</title>
+</head>
+
+<body>
+  <script>
+    // Set
+    // 成员唯一，无序且不能重复
+    // 只有健值，没有健名，有点类似数组。
+    // 可以遍历，方法有add, delete, has
+    let data1 = new Set([2, 3, 5, 4, 5, 2, 2]);
+    console.log(data1); // 2, 3, 5, 4
+    console.log(data1.has(2)); // true
+    console.log(data1.size); // 4
+    for (const item of data1) {
+      console.log(item);
+    }
+
+    // WeakSet
+    // 成员都是对象或数组
+    // 成员都是弱引用，随时可以消失。
+    // 可以用来保存DOM节点，不容易造成内存泄漏
+    // 不能遍历，方法有add, delete, has
+    const obj1 = { name: 'xiaoming' };
+    const obj2 = { age: 20 };
+    const arr1 = [10, 20];
+    let data2 = new WeakSet([obj1, obj2, arr1]);
+    console.log(data2);
+    console.log(data2.has(obj1));
+    console.log(data2.has(obj2));
+    console.log(data2.has(arr1));
+
+    // Map
+    // 本质上是健值对的集合，类似集合
+    // 可以遍历，方法很多，可以干各种数据格式转换
+    let data3 = new Map([['name', 'xiaoming'], ['age', 20]]);
+    console.log(data3);
+    console.log(data3.keys()); // name age
+    console.log(data3.values()); // xiaoming 20
+    
+    // WeakMap
+    // 直接受对象作为健名（null除外），不接受其他类型的值作为健名
+    // 健名所指向的对象不计入垃圾回收机制
+    // 不能遍历，方法同get,set,has,delete
+
+  </script>
+</body>
+
+</html>

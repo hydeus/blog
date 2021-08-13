@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>碰撞指针</title>
+</head>
+
+<body>
+  <script>
+    // 对撞指针（方向相反）左右分别开始 适用于有序数组
+    function sum(data, target) {
+      var data = data.sort((a, b) => a - b)
+      var left = 0
+      var right = data.length - 1
+      var temp = []
+
+      while (left < right) {
+        if (data[left] + data[right] === target) {
+          temp.push({
+            left: data[left],
+            right: data[right]
+          })
+          right--
+          left++
+        } else if (data[left] + data[right] > target) {
+          right--
+        } else {
+          left++
+        }
+      }
+
+      return temp
+    }
+
+    var data = [1, 2, 3, 4, 20, 17, 19, 5, 18]
+    var target = 20
+    console.log(sum(data, target))
+  </script>
+</body>
+
+</html>
