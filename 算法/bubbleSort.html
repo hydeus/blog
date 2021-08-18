@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>排序算法</title>
+  <title>冒泡排序</title>
 </head>
 
 <body>
@@ -13,6 +13,10 @@
     // https://www.zhihu.com/question/23148377
 
     var arr = [1, 2, 5, 90, 23, 4, 100, 9]
+    console.log(Math.max(...arr));
+    console.log(Math.min(...arr));
+    console.log(Math.max.apply(this, arr));
+    console.log(Math.min.apply(this, arr));
 
     // 冒泡排序
     function bubbleSort(arr) {
@@ -30,7 +34,6 @@
     }
     console.log(bubbleSort(arr))
 
-    // 
   </script>
 </body>
 

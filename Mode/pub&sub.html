@@ -27,9 +27,7 @@
       // 删除订阅
       off(type, callBack) {
         if (!this.events[type]) return;
-        this.events[type] = this.events[type].filter(item => {
-          return item !== callBack;
-        });
+        this.events[type] = this.events[type].filter(item => item !== callBack);
       }
       // 只执行一次订阅事件
       once(type, callBack) {

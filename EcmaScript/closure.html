@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>闭包(closure)</title>
+</head>
+
+<body>
+  <script>
+    // 闭包(closure)
+    // 外包函数访问内部函数作用域中变量的函数
+    // 前加取新值，后加取旧值
+
+    var idx = 0
+    function Fun() {
+      return ++idx
+    }
+
+    console.log(Fun()); // 1
+    console.log(Fun()); // 2
+    console.log(Fun()); // 3
+
+    function Fun1() {
+      var idx = 0
+      return function() {
+        ++idx
+        console.log(idx)
+      }
+    }
+    var fn = Fun1()
+    fn() // 1
+    fn() // 2
+    fn() // 3
+
+  </script>
+</body>
+
+</html>

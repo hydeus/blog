@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>快速排序</title>
+</head>
+
+<body>
+  <script>
+    // 先选择一个数当基数，一般选择最后一个数
+    // 然后遍历arr， 找出这个基点数的比它大的数组集合和比它小的数组集合
+    // 递归此步骤
+
+    var arr = [1, 2, 5, 90, 23, 4, 100, 9]
+
+    function quickSort(arr) {
+      if (arr.length < 2) return arr
+
+      const cur = arr[arr.length - 1]
+      let left = []
+      let right = []
+      for (let i = 0; i < arr.length - 1; i++) {
+        if (arr[i] >= cur) {
+          right.push(arr[i])
+        } else {
+          left.push(arr[i])
+        }
+      }
+
+      return [...quickSort(left), cur, ...quickSort(right)]
+    }
+    console.log(quickSort(arr))
+  </script>
+</body>
+
+</html>
