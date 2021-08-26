@@ -34,12 +34,22 @@
     const person1 = new Person('halo', 28);
     const person2 = new Person('halo', 28);
 
-    console.log(Person.prototype.constructor === Person); // true
-    console.log(Person.__proto__ === Function.prototype); // true
     console.log(Person.prototype); // 输出原型下的属性
 
-    console.log(person1.constructor === Person); // true
+    // __proto__
+    console.log('======================== __proto__ ===========================');
     console.log(person1.__proto__ === Person.prototype); // true
+    console.log(Person.__proto__ === Function.prototype); // true
+    console.log(Function.prototype.__proto__ === Object.prototype); // true
+    console.log(Object.prototype.__proto__ === null); // true
+    
+    // constructor
+    console.log('======================== constructor ===========================');
+    console.log(person1.constructor === Person); // true
+    console.log(Person.constructor === Function); // true
+
+
+    console.log(Person.prototype.constructor === Person); // true
     console.log(person1.say === person2.say); // true
     console.log(person1.message === person2.message); // false，实例化后this指向到不同的实例，公共方法及属性可以在构造函数的原型上实现
     console.log(person1 instanceof Person); // true
