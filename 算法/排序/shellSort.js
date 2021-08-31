@@ -7,14 +7,13 @@
  * 待整个序列中的记录基本有序时，再对全体记录进行依次直接插入排序。
  */
 
-var arr = [3, 5, 7, 1, 4, 56, 12, 78, 25, 0, 9, 8, 42, 37]
 
 function shellSort(arr) {
   // 用于存储需要插入的数据
   var temp
   // 定义步长，2代表把数组分为两个子序列（数组）
   var gap = Math.floor(arr.length / 2)
-
+  
   while (gap >= 1) {
     for (var i = gap, len = arr.length; i < len; i++) {
       // 将第i个数据保存，以供之后插入的合适的位置使用
@@ -26,12 +25,14 @@ function shellSort(arr) {
       // 将temp插入合适的位置
       arr[j + gap] = temp
     }
-
+    
     gap = Math.floor(gap / 2)
   }
-
-
+  
+  
   return arr
 }
 
+var arr = [3, 5, 7, 1, 4, 56, 12, 78, 25, 0, 9, 8, 42, 37]
 console.log(shellSort(arr))
+

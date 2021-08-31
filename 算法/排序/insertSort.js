@@ -2,8 +2,6 @@
  * 插入排序
  */
 
-var arr = [3, 5, 7, 1, 4, 56, 12, 78, 25, 0, 9, 8, 42, 37]
-
 function insertSort(arr) {
   for (var index = 1, len = arr.length; index < len; index++) {
     var ele = arr[index]
@@ -17,4 +15,6 @@ function insertSort(arr) {
   return arr
 }
 
+var arr = [3, 5, 7, 1, 4, 56, 12, 78, 25, 0, 9, 8, 42, 37]
 console.log(insertSort(arr))
+

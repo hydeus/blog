@@ -6,15 +6,14 @@
  * 递归此步骤
  */
 
-var arr = [3, 5, 7, 1, 4, 56, 12, 78, 25, 0, 9, 8, 42, 37]
 
 function quickSort(arr) {
   if (arr.length < 2) return arr
-
+  
   var left = []
   var right = []
   var cur = arr[arr.length - 1]
-
+  
   for (var i = 0; i < arr.length - 1; i++) {
     if (arr[i] >= cur) {
       right.push(arr[i])
@@ -22,9 +21,12 @@ function quickSort(arr) {
       left.push(arr[i])
     }
   }
-
+  
   return [...quickSort(left), cur, ...quickSort(right)]
-
+  
 }
 
+var arr = [3, 5, 7, 1, 4, 56, 12, 78, 25, 0, 9, 8, 42, 37]
 console.log(quickSort(arr))
+
+

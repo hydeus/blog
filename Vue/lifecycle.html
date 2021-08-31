@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>vue 生命周期</title>
+</head>
+
+<body>
+  <div id="app"></div>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script>
+    // todo...
+    // Vue生命周期分为4大步：
+    // 1. 创建：vue实例被创建
+    //     - beforeCreate 创建前，data和methods没有被初始化
+    //     - created 创建完毕，data中有值
+    // 2. 挂载：vue实例被挂载到真实的dom节点
+    //     - beforeMount 可以发起请求获取数据
+    //     - mounted 操作dom
+    // 3. 更新：vue实例中的data数据发生改变，触发组件重新渲染 
+    //     - beforeUpdate
+    //     - updated
+    // 4. 销毁：vue实例被销毁
+    //     - beforeDestroy 实例销毁前，清除定时器等
+    //     - destroyed 
+
+    let app = new Vue({
+      el: '#app',
+      data() {
+        return {
+          a: 1
+        }
+      },
+      beforeCreate() {
+        console.log(this.a); // undefined
+      },
+      created() {
+        console.log(this.a); // 1
+        console.log(this.$el); // undefined
+      },
+      beforeMount() {
+        console.log(this.$el); // dom
+      },
+      mounted() {
+        console.log(this);
+        console.log(this.$el); // dom
+      }
+    })
+  </script>
+</body>
+
+</html>
