@@ -13,9 +13,10 @@ function shellSort(arr) {
   var temp
   // 定义步长，2代表把数组分为两个子序列（数组）
   var gap = Math.floor(arr.length / 2)
-  
+  var len = arr.length
+
   while (gap >= 1) {
-    for (var i = gap, len = arr.length; i < len; i++) {
+    for (var i = gap; i < len; i++) {
       // 将第i个数据保存，以供之后插入的合适的位置使用
       temp = arr[i]
       // 因为前i-1个数都是从小到大的有序序列，只要当前比较的数arr[j-1]比temp大，就把这个数后移一位

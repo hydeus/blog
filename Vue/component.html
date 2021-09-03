@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>vue父子组件之间通信</title>
+</head>
+
+<body>
+  <div id="app">
+    <test-component @value-to-child="handClickForChild"></test-component>
+    <test-component :text="text"></test-component>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script>
+    // 1. 父传子：props
+    // 2. 子传父：在父组件定义自定义事件，在子组件使用$emit回传给父组件
+    const TestComponent = {
+      name: 'TestComponent',
+      props: {
+        text: {
+          type: String,
+          default: '这里是默认值~~~'
+        }
+      },
+      template: `<h3>{{text}}<button @click="handleClick">这里是子组件的按钮</button></h3>`,
+      methods: {
+        handleClick() {
+          this.$emit('value-to-child', '这里是子组件传给父组件的内容')
+        }
+      }
+    };
+
+    let app = new Vue({
+      el: '#app',
+      data() {
+        return {
+          text: '这里是从父组件传的内容~~~'
+        }
+      },
+      components: {
+        TestComponent
+      },
+      methods: {
+        handClickForChild(content) {
+          console.log(content)
+        }
+      }
+    });
+  </script>
+</body>
+
+</html>

@@ -11,6 +11,7 @@
 <body>
   <script src="./data.js"></script>
   <script>
+    console.log(data);
     // 深度优先遍历
     /**
      * 基本思路
@@ -46,13 +47,14 @@
       // 存放结果的数组
       const result = [];
       // 当前栈内为全部数组
-      const stack = JSON.parse(JSON.stringify(data));;
+      const stack = JSON.parse(JSON.stringify(data));
       // 循环条件，栈不为空
       while (stack.length !== 0) {
         // 最上层节点出栈
         const node = stack.shift(); // 这个地方回改变原有数组的数据，第一次就只有第一个元素
         // 存放节点
         result.push(node.id);
+        // 深度同级最后面的优先
         node.children.slice().reverse().forEach(child => stack.unshift(child)); // 从头部插入进栈元素
       }
 
