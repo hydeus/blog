@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>keep-alive</title>
+</head>
+<body>
+  <script>
+    // keep-alive 是vue内置组件，能在组件切换的过程中将状态保留在内存中，防止重复渲染DOM
+    // keep-alive 包裹组件时，会缓存不活动的组件实例，而不是销毁它
+    // 1. prop
+    //    include 字符串或正则表达式，只有匹配的组件才会被缓存
+    //    exclude 字符串或正则表达式，只有匹配的组件才不会被缓存
+    //    exclude的优先级大于include
+    // 2. keep-alive生命周期钩子函数
+    //    activated 组件被激活时调用，在activated钩子函数获取数据，替换created
+    //    deactivated 组件在被停用时调用
+    //    第一次被调用的生命周期：created->mounted->activated
+    //    第二次只触发activated
+
+    
+  </script>
+</body>
+</html>

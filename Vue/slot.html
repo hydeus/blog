@@ -9,9 +9,69 @@
 </head>
 
 <body>
+  <div id="app">
+    <default-slot><p>这里是普通插槽</p></default-slot>
+    <br>
+    <name-slot>
+      <!-- 此方式官方在2.6.0已废弃 -->
+      <!-- <p slot="header">这里是具名插槽的头部</p>  -->
+      <template #header><p>这里是具名插槽的缩写</p></template>
+      <!-- <template v-slot:header><p>这里是具名插槽的header</p></template> -->
+      <template v-slot:footer><p>这里是具名插槽的footer</p></template>
+      <p>这里是内容</p>
+    </name-slot>
+    <br>
+    <scope-slot>
+      <template #title><strong>3.这里是作用域插槽的title1</strong></template>
+      <template v-slot:default="slotProps">
+        <p>{{slotProps.child.text2}}</p>
+      </template>
+    </scope-slot>
+    <br>
+    <scope-slot>
+      <template #title><strong>4.这里是作用域插槽的title2</strong></template>
+    </scope-slot>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
   <script>
-    Vue.component('alert-box', {
-      template: "<div class='demo-alert-box'> <strong>Error!</strong> <slot></slot> </div>"
+    // 1. 普通插槽
+    Vue.component('default-slot', {
+      template: `<div> 
+                  <strong>1. 普通插槽</strong>
+                  <slot></slot>
+                </div>`
+    });
+
+    // 2. 具名插槽
+    Vue.component('name-slot', {
+      template: `<div>
+                  <strong>2. 具名插槽</strong> 
+                  <slot name="header"></slot>
+                  <slot></slot>
+                  <slot name="footer"></slot>
+                </div>`
+    });
+
+    // 3. 作用域插槽--->是父组件使用子组件的值
+    Vue.component('scope-slot', {
+      template: `<div>
+                  <slot name="title"></slot>
+                  <slot :child="child">
+                    <p>{{child.text1}}</p>
+                  </slot>
+                </div>`,
+      data() {
+        return {
+          child: {
+            text1: '这里是子组件的默认值1',
+            text2: '这里是子组件的默认值2'
+          }
+        }
+      }
+    });
+
+    new Vue({
+      el: '#app'
     })
   </script>
 </body>

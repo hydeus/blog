@@ -21,4 +21,8 @@
 ### 简历
 1. (参考链接)[https://www.zhihu.com/org/ling-kou-leetcode]
 
-
+### todo...
+1. webpack
+2. nodejs
+3. http
+4. 性能优化

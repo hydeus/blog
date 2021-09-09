@@ -7,8 +7,26 @@
   <title>extend</title>
 </head>
 <body>
+  <div id="app"></div>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
   <script>
-    // Vue.extend 给Vue创建子类组件
+    // Vue.extend 给Vue创建子类组件，常见的UI框架都是这么搞的
+    // 适用于创建全局组件
+    
+    // 创建构造器
+    var Demo = Vue.extend({
+      template: '<p>{{firstName}} {{lastName}} aka {{alias}}</p>',
+      data: function() {
+        return {
+          firstName: 'firstName',
+          lastName: 'lastName',
+          alias: 'alias'
+        }
+      }
+    });
+
+    // 创建Demo实例，并挂载到元素上
+    new Demo().$mount('#app');
   </script>
 </body>
 </html>

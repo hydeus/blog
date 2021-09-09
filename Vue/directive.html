@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vue.directive 指令</title>
+</head>
+
+<body>
+  <div id="app">
+    <div v-permission="'1'">
+      <button>按钮1，在权限里面</button>
+    </div>
+    <div v-permission="'10'">
+      <button>按钮10，不在权限里面</button>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script>
+    // Vue.directive 自定义指令，适用于权限管理，比如按钮是否显示
+
+    Vue.directive('permission', {
+      // 只调用一次
+      bind: function(el, binding, vnode) {
+
+      },
+      // inserted → 元素插入的时候
+      inserted(el, binding) {
+        const permissionList = ['1', '2', '3'];
+        // 获取到 v-permission的值
+        const { value: permission } = binding
+
+        if (permission) {
+          const hasPermission = permissionList.includes(permission)
+          console.log(hasPermission);
+
+          if (!hasPermission) {
+            el.parentNode && el.parentNode.removeChild(el)
+          }
+        } else {
+          throw new Error(`need permission! Like v-permission="'1'"`)
+        }
+      }
+    })
+
+    new Vue({
+      el: '#app'
+    })
+  </script>
+</body>
+
+</html>
