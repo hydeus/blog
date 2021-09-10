@@ -1,0 +1,1 @@
+// promise promise.all promise.allSettled promise.race promise.spread
