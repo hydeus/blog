@@ -13,30 +13,29 @@ export default class Watcher {
    * @param {*} cb 更新视图的回调函数
    */
   constructor(vm, key, cb) {
-    this.vm = vm
-    this.key = key
-    this.cb = cb
+    this.vm = vm;
+    this.key = key;
+    this.cb = cb;
 
     // todo...
-    // 同一
-    Dep.target = this
+    Dep.target = this;
 
     // 触发get方法，在get方法里会去做一些操作
     // 初始化的时候就是旧值
-    this.oldValue = vm[key]
+    this.oldValue = vm[key];
 
-    Dep.target = null
+    Dep.target = null;
   }
 
   // 数据变化的时候更新视图
   update() {
     // 更新过后就是新值
-    let newValue = this.vm[this.key]
+    let newValue = this.vm[this.key];
     // 兜底
     if(this.oldValue === newValue) {
-      return
+      return;
     }
-    this.cb(newValue)
+    this.cb(newValue);
   }
 }
 

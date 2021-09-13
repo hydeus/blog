@@ -6,9 +6,9 @@ import Vue from './vue.js';
 let vm = new Vue({
   el: '#app',
   data: {
-    a: 1,
-    b: 2,
-    c: 3
+    msg: 'Hello World',
+    count: '100',
+    testHtml: '<ul><li>这里是v-html渲染</li></ul>'
   },
   methods: {
     handClick() {
@@ -17,4 +17,4 @@ let vm = new Vue({
   }
 })
 
-console.log(vm)
+console.log(vm);

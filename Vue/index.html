@@ -9,7 +9,29 @@
 </head>
 
 <body>
-  <div id="app"></div>
+  <div id="app">
+    <h1>模板表达式</h1>
+    <h3>{{ msg }}</h3>
+    <h3>{{ count }}</h3>
+    <br />
+
+    <h1>v-text测试</h1>
+    <div v-text="msg"></div>
+    <br />
+
+    <h1>v-html测试</h1>
+    <div v-html="testHtml"></div>
+    <br />
+
+    <h1>v-model测试</h1>
+    <input type="text" v-model="msg">
+    <input type="text" v-model="count">
+    <br />
+
+    <h1>v-on:click测试</h1>
+    <button v-on:click="handClick">按钮</button>
+
+  </div>
   <script src="./vue/index.js" type="module"></script>
 </body>
 

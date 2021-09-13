@@ -8,25 +8,19 @@
 export default class Dep {
   constructor() {
     // 存储所有观察者
-    this.subs = []
+    this.subs = [];
   }
 
   // 添加观察者
   addSub(watcher) {
     if (watcher && watcher.update) {
-      this.subs.push(watcher)
-    }
-  }
-
-  depend() {
-    if (Dep.target) {
-      this.addSub(Dep.target)
+      this.subs.push(watcher);
     }
   }
 
   // 通知watcher
   notify() {
-    this.subs.forEach(watcher => watcher.update())
+    this.subs.forEach(watcher => watcher.update());
   }
 }
 
