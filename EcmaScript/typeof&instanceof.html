@@ -60,6 +60,15 @@
     console.log(xiaoming.__proto__ === Person.prototype); // true
     // A instanceof B, B instanceof C 根据原型链 一层一层的往上找
 
+    // 模拟instanceof
+    function instance_of(A, B) {
+      return A.__proto__ === B.prototype;
+    }
+
+    console.log(instance_of(xiaoming, Person));
+    console.log(instance_of([], Array));
+    console.log(instance_of({}, Object));
+
     // 这种方式检测数据类型更准确
     console.log(Object.prototype.toString.call([])); // [object Array]
 
