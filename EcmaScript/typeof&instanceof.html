@@ -28,7 +28,7 @@
     console.log(typeof new Date()); // object 引用类型
     console.log(typeof {}); // object 引用类型
 
-    console.log(typeof function(){}); // function 为什么不是object?
+    console.log(typeof function() {}); // function 为什么不是object?
     console.log(typeof Array); // function 为什么不是object?
     // typeof 引用类型 => object || function
     // js在最初定义的时候，把引用类型分为了两类
@@ -61,17 +61,30 @@
     // A instanceof B, B instanceof C 根据原型链 一层一层的往上找
 
     // 模拟instanceof
-    function instance_of(A, B) {
+    // A instanceof B ===> true
+    function _instanceof(A, B) {
+      // 构造函数原型
+      const prototype = B.prototype;
+      // 实例对象属性，指向其构造函数原型
+      let __proto__ = A.__proto__;
+      // 查实原型链
+      while (true) {
+        // 如果为null，说明原型链已经查找到最顶层了，直接返回false
+        if (__proto__ === null) return false;
+        // 查找到原型
+        if (prototype === A) return true;
+        // 继续向上查找
+        A = A.__proto__;
+      }
       return A.__proto__ === B.prototype;
     }
 
-    console.log(instance_of(xiaoming, Person));
-    console.log(instance_of([], Array));
-    console.log(instance_of({}, Object));
+    console.log(_instanceof(xiaoming, Person));
+    console.log(_instanceof([], Array));
+    console.log(_instanceof({}, Object));
 
     // 这种方式检测数据类型更准确
     console.log(Object.prototype.toString.call([])); // [object Array]
-
   </script>
 </body>
 

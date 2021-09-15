@@ -19,6 +19,10 @@
     // 实例化的__proto_指向构造函数的prototype
     // 构造函数的prototype的constructor指向本身
 
+    // 所有函数对象的__proto__都指向Function.prototype
+    console.log(String.__proto__ === Function.prototype); // true
+    console.log(String.constructor === Function); // true
+
     function Person(name, age) {
       this.name = name;
       this.age = age;
