@@ -6,14 +6,38 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>requestAnimationFrame</title>
+  <style>
+    *{margin: 0; padding: 0;}
+    #some-element-you-want-to-animate{width: 200px; height: 200px; background-color: #e91e63;}
+  </style>
 </head>
 
 <body>
+  <div id="some-element-you-want-to-animate"></div>
   <script>
     // requestAnimationFrame
     // https://zhuanlan.zhihu.com/p/145793042
     // setTimeout 间隔时间为16.7 
     // 浏览器的刷新频率为每秒 60 帧 ，1 秒=1000 毫秒， 1000/60=16.7ms
+
+    const element = document.getElementById('some-element-you-want-to-animate');
+    let start;
+
+    function step(timestamp) {
+      if (start === undefined) {
+        start = timestamp;
+      }
+      const elapsed = timestamp - start;
+
+      //这里使用`Math.min()`确保元素刚好停在200px的位置。
+      element.style.transform = 'translateX(' + Math.min(0.1 * elapsed, 200) + 'px)';
+
+      if (elapsed < 2000) { // 在两秒后停止动画
+        requestAnimationFrame(step);
+      }
+    }
+
+    requestAnimationFrame(step);
   </script>
 </body>
 

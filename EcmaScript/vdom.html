@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>虚拟DOM</title>
+</head>
+
+<body>
+  <script>
+    /**
+     * 将虚拟DOM转为真实DOM
+     */
+    let vdom = {
+      tag: 'DIV',
+      attrs: {
+        id: 'app'
+      },
+      children: [
+        {
+          tag: 'SPAN',
+          children: [
+            { tag: 'A', children: [] }
+          ]
+        },
+        {
+          tag: 'SPAN',
+          children: [
+            { tag: 'A', children: [] },
+            { tag: 'A', children: [] }
+          ]
+        }
+      ]
+    }
+
+
+    function render(vdom) {
+      // 创建元素
+      var dom = document.createElement(vdom.tag);
+      // 设置属性
+      if (vdom.attrs) {
+        Object.keys(vdom.attrs).forEach(attr => {
+          dom.setAttribute(attr, vdom.attrs[attr]);
+        })
+      }
+
+      // 递归遍历所有自己点
+      if (vdom.children) {
+        vdom.children.forEach(child => {
+          dom.appendChild(render(child));
+        })
+      }
+
+      return dom;
+    }
+
+    console.log(render(vdom));
+  </script>
+</body>
+
+</html>

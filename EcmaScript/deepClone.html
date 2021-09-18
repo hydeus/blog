@@ -141,7 +141,7 @@
 
     function isObject(target) {
       const type = typeof target;
-      return target !== null && (type === 'object' || type === 'function');
+      return target !== null && (type === 'object' || type === 'function'); // 深拷贝只是拷贝复杂数据类型
     }
 
     function deepClone(target, cache = new WeakSet()) {
