@@ -92,13 +92,3 @@ console.log(a); // 使用
 
 ### 基本类型占用的字节数（Bytes）null undefined boolean number string symbol bigint
 
-
-
-
-
-
-
-
-
-
-## 贪心算法

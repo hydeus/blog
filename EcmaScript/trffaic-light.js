@@ -33,13 +33,14 @@ run();
 // promise 链式调用
 let myStep = () => {
   Promise.resolve().then(() => {
-    return myLight(3000, red);
+    return lightControl(3000, red);
   }).then(() => {
-    return myLight(2000, green);
+    return lightControl(2000, green);
   }).then(() => {
-    return myLight(1000, yellow);
+    return lightControl(1000, yellow);
   }).then(() => {
     myStep();
   })
 };
 myStep();
+

@@ -6,9 +6,196 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>debounce&throttle</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    body,
+    li {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    li {
+      width: 500px;
+      height: 200px;
+      list-style: none;
+    }
+
+    li:nth-child(2n) {
+      background-color: moccasin;
+    }
+
+    li:nth-child(2n+1) {
+      background-color: yellowgreen;
+    }
+  </style>
 </head>
 
 <body>
+  <ul>
+    <li><input type="text" oninput="debounceOninput(event)"></li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+    <li>这里是throttle操作</li>
+  </ul>
   <script>
     // debounce 防抖 
     // 在事件被触发n秒后再执行回调，如果在这n秒内又被触发，则重新计时；在规定的时间内执行多次就只执行最后一次生效
@@ -22,14 +209,23 @@
      * @return {Function}     返回一个“去弹跳”了的函数
      */
     function debounce(fn, delay) {
-      let timer
+      let timer = null;
       return function() {
         if (timer) clearTimeout(timer)
-        timer = setTimeout(function() {
-          fn.apply(this, arguments)
-        }, delay)
+        timer = setTimeout(() => {
+          fn.apply(this, arguments);
+        }, delay);
       }
     }
+
+    function onInput(e) {
+      console.log(e.target.value);
+    }
+
+    const debounceOninput = debounce(onInput, 1000);
+
+
+
 
     // throttle 节流
     // 规定在一个单位时间内，只能触发一次函数。如果这个单位时间内触发多次函数，只有一次生效
@@ -37,33 +233,67 @@
     // 拖拽场景：固定时间内只执行一次，防止超高频次触发位置变动
     // 缩放场景：监控浏览器resize
     // 动画场景：避免短时间内多次触发动画引起性能问题
-    // 1. 定义一个标识位
-    function throttle(fn, delay) {
-      let flag = true
+    // 滚动
+
+
+    // 1. 时间戳实现。首节流，第一次立即执行，但是停止触发后，没办法再次执行
+    function throttleTime(fn, delay) {
+      let previous = 0;
       return function() {
-        if (!flag) return
-        flag = false
-        setTimeout(function() {
-          flag = true
-          fn.apply(this, arguments)
-        }, delay)
-      }
-    }
-    // 2. 时间戳
-    function throttleTime(fn, wait) {
-      let previous = 0
-      return function() {
-        let now = +new Date()
-        if (now - previous > wait) {
-          fn.apply(this, arguments)
-          previous = now
+        let now = Date.now();
+        if (now - previous > delay) {
+          fn.apply(this, arguments);
+          previous = now;
         }
       }
     }
 
-    window.addEventListener('resize', throttle(() => {
-      console.log('throttle')
-    }, 2000))
+
+
+
+    // 2. 定时器实现。尾节流，不会立即执行函数，而是在delay之后执行
+    // 最后一次停止触发后，因为delay的定时器，还好执行最后一次
+    function throttleTimer(fn, delay) {
+      let timer = null;
+      return function() {
+        if (!timer) {
+          timer = setTimeout(() => {
+            fn.apply(this, arguments);
+            timer = null;
+          }, delay);
+        }
+      }
+    }
+
+
+
+    // 3. 时间戳+定时器实现，包含首尾节流
+    function throttle(fn, delay) {
+      let timer = null;
+      let startTime = 0;
+      return function() {
+        let curTime = Date.now();
+        let remaining = delay - (curTime - startTime); // 计算出还剩于多少时间到下一次
+        let content = this;
+        let args = arguments;
+
+        clearTimeout(timer); // 清除定时器避免重新计时，因为有些可能还没有走完
+        if (remaining <= 0) {
+          fn.apply(content, args);
+          startTime = Date.now();
+        } else {
+          timer = setTimeout(() => {
+            fn.apply(content, args);
+            startTime = Date.now();
+          }, remaining);
+        }
+      }
+    }
+
+
+    window.addEventListener('scroll', throttle(() => {
+      console.log('throttle');
+    }, 2000));
   </script>
 </body>
 
