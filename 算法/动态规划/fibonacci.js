@@ -4,6 +4,7 @@
 
 
 // 动态规划解决斐波那契问题
+// 从第3项开始，每一项等于前两项之和
 
 function dynamicFib(n) {
   var val = []
