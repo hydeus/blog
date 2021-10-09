@@ -8,7 +8,7 @@
 
 
 function quickSort(arr) {
-  if (arr.length < 2) return arr
+  if (arr.length < 2) return arr;
   
   var left = []
   var right = []
@@ -16,17 +16,17 @@ function quickSort(arr) {
   
   for (var i = 0; i < arr.length - 1; i++) {
     if (arr[i] >= cur) {
-      right.push(arr[i])
+      right.push(arr[i]);
     } else {
-      left.push(arr[i])
+      left.push(arr[i]);
     }
   }
   
-  return [...quickSort(left), cur, ...quickSort(right)]
+  return [...quickSort(left), cur, ...quickSort(right)];
   
 }
 
-var arr = [3, 5, 7, 1, 4, 56, 12, 78, 25, 0, 9, 8, 42, 37]
-console.log(quickSort(arr))
+var arr = [3, 5, 7, 1, 4, 56, 12, 78, 25, 0, 9, 8, 42, 37];
+console.log(quickSort(arr));
 
 
