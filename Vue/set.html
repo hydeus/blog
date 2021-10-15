@@ -7,6 +7,11 @@
   <title>Vue.$set 实现原理</title>
 </head>
 <body>
-  
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script>
+    // 在实例创建之后添加新的属性到实例上，是不会触发视图更新的。实际就是没有给当前新增加的属性增加getter/setter方法
+    // Vue.$set就是解决视图不能更新的问题
+    // 原理：给新增的属性绑定getter/setter方法，然后再执行dep.notify()，通知watcher更新
+  </script>
 </body>
 </html>

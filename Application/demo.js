@@ -31,3 +31,14 @@ Foo.a(); // 4 全局
 let obj = new Foo();
 obj.a(); // 2 
 Foo.a(); // 1 实例化过后把上面的覆盖了
+
+
+function test_obj() {
+  return {
+    a: 1,
+    b: 2 
+  }
+}
+
+var objj = new test_obj();
+console.log(objj);
