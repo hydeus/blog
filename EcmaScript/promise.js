@@ -27,3 +27,14 @@ var p3 = Promise.resolve(2);
 var p = Promise.myAll([p1, p2, p3]);
 p.then(res => console.log(res)).catch(err => console.log(err));
 
+var p4 = new Promise((resolve, reject) => { reject('error~~~') });
+
+try {
+  p4.then(result => {
+    console.log('1=====' + result);
+  }).catch(err => {
+    console.log('2=====' + err);
+  })
+} catch(err) {
+  console.log('3=====' + err);
+}

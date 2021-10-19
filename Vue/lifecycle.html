@@ -42,6 +42,7 @@
       created() {
         console.log(this.a); // 1
         console.log(this.$el); // undefined
+        console.log(this.props); // props传过来的值最先在created中获取到
       },
       beforeMount() {
         console.log(this.$el); // dom

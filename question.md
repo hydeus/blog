@@ -10,3 +10,52 @@
 8. 作用域链
 9. 原型链
 10. 数组扁平化
+
+
+# XSKY星辰天合
+
+1. 函数式编程
+2. 性能优化
+3. react hooks
+4. 不可变化，var a = '123' => '423'
+5. css动画卡顿
+6. 性能优化
+7. 为什么函数是一等公民
+8. 面向对象编程
+
+
+# 同程艺龙
+
+1. 看过那些vue的源码，我说了vue双向绑定，模板解析，路由
+2. history改hash需要注意那些点？？？
+3. vue响应式原理 vue2.0 vue3.0
+4. vue监听数组，对象的方式
+5. vue diff 不同的子节点
+6. watch与computed
+7. beforeCreate created props el data
+8. loader plugin
+9. 箭头函数与普通函数的区别
+10. 实现promise？？？
+11. promise捕获异常，try catch能获取promise的异常吗
+12. 实现块级作用域 es6？？？
+13. 跨域，用iframe跨域怎么来实现
+14. localStroage sessionStroage cookie(不同域) 同域
+15. 性能优化
+16. ssr async getData
+17. 错误收集
+18. 小程序，flutter，electron，微前端
+19. 微前端思想
+20. 实现一个微前端
+
+# 蚂蚁金服-大安全部门
+
+1. 异步加载的js执行回调
+2. DLL配置
+
+# 其他
+
+1. 如何提取高度嵌套的对象里的指定属性？ 
+  a. 先JSON.stringify()再正则match
+  b. 解构
+  c. lodash.get
+  d. 可选链操作符（?.）

@@ -26,7 +26,27 @@
           default: '这里是默认值~~~'
         }
       },
+      data() {
+        return {
+          a: 111
+        }
+      },
       template: `<h3>{{text}}<button @click="handleClick">这里是子组件的按钮</button></h3>`,
+      beforeCreate() {
+        console.log(this.a); // undefined
+      },
+      created() {
+        console.log(this.text);
+        console.log(this.a); // 1
+        console.log(this.$el); // undefined
+      },
+      beforeMount() {
+        console.log(this.$el); // dom
+      },
+      mounted() {
+        console.log(this);
+        console.log(this.$el); // dom
+      },
       methods: {
         handleClick() {
           this.$emit('value-to-child', '这里是子组件传给父组件的内容')

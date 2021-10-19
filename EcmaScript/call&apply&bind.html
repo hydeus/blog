@@ -29,16 +29,34 @@
     console.log(dog.message.apply(cat, ['睡觉']))
     console.log(dog.message.bind(cat, '打豆豆')()) // 需要用变量接收再执行
 
-    // 手写一个bind方法
+    // 手写call方法
+    Function.prototype.newCall = function(ctx) {
+      var args = [...arguments].slice(1);
+      ctx.fn = this;
+      var result = ctx.fn(...args);
+      delete ctx.fn;
+      return result;
+    }
+
+    // 手写apply方法
+    Function.prototype.newApply = function(ctx) {
+      var args = arguments[1] || [];
+      ctx.fn = this;
+      var result = ctx.fn(...args);
+      delete ctx.fn;
+      return result;
+    }
+
+    // 手写bind方法
     Function.prototype.newBind = function() {
-      var self = this
-      var [obj, ...rest] = arguments
+      var self = this;
+      var [obj, ...rest] = arguments;
       return function() {
-        return self.call(obj, ...rest)
+        return self.call(obj, ...rest);
       }
     }
 
-    console.log(dog.message.newBind(cat, '打豆豆1')())
+    console.log(dog.message.newBind(cat, '打豆豆1')());
 
   </script>
 </body>

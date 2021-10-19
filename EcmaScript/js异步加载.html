@@ -10,14 +10,27 @@
 
 <body>
   <script>
-    (function() {
-      var scriptEle = document.createElement("script");
-      scriptEle.type = "text/javasctipt";
-      scriptEle.async = true;
-      scriptEle.src = "http://cdn.bootcss.com/jquery/3.0.0-beta1/jquery.min.js";
-      var x = document.getElementsByTagName("head")[0];
-      x.insertBefore(scriptEle, x.firstChild);
-    })();
+    // 解决异步加载js后调用JS中的方法问题
+    function loadJS(src, callback) {
+      var script = document.createElement('script');
+      var head = document.getElementsByTagName('head')[0];
+      var loaded;
+      script.src = src;
+      if (typeof callback === 'function') {
+        script.onload = script.onreadystatechange = function() {
+          if (!loaded && (!script.readyState || /loaded|complete/.test(script.readyState))) {
+            script.onload = script.onreadystatechange = null;
+            loaded = true;
+            callback();
+          }
+        }
+      }
+      head.appendChild(script);
+    }
+
+    loadJS('http://cdn.bootcss.com/jquery/3.0.0-beta1/jquery.min.js', function() {
+      console.log(window.$);
+    });
   </script>
 </body>
 
