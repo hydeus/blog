@@ -144,12 +144,16 @@
       return target !== null && (type === 'object' || type === 'function'); // 深拷贝只是拷贝复杂数据类型
     }
 
+    // 解决深拷贝中因为循环引用造成的死循环问题，比如 a = { b: { c: a }}
+    // 1. WeakSet
+    // 2. 数组
+
     function deepClone(target, cache = new WeakSet()) {
       if (!isObject(target)) return target; // 拷贝基本类型值
 
       if (cache.has(target)) return target;
 
-      cache.add(target);
+      cache.add(target); // 缓存已经拷贝过的内容，防止重复引用造成的死循环
 
       const tag = Object.prototype.toString.call(target);
       let cloneTarget = initCloneTargetByTag(target, tag); // 使用拷贝对象的构造方法创建对应类型的数据

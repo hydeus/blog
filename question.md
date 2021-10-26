@@ -59,3 +59,32 @@
   b. 解构
   c. lodash.get
   d. 可选链操作符（?.）
+2. 性能优化分析，分析js变量是否还在使用
+
+# 一点万物
+
+1. setTimeout 延迟
+2. requestAnimateFrame  
+3. 一帧一帧动画 关键帧 ===> 把动画关键帧图片放在一个图片上（精灵图）,定时更换背景图
+4. flex space-between
+5. fixed 兼容性  ---》 flex
+6. input click 
+7. namespace: true?
+8. vuex动态加模块module
+9. JSON.parse引起的问题
+10. 循环引用 深拷贝
+11. 监听query改变
+
+
+# 不知名的公司
+
+1. 垂直水平居中
+2. display: none visibility: hidden
+3. 伪类
+4. 伪元素 三角形
+5. 普通函数与箭头函数
+6. 数组的方法
+7. shift unshift?
+8. 百度输入框，请求返回顺序
+9. 复杂类型
+10. 事件委托

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    .progress {
+      width: 0;
+      height: 20px;
+      line-height: 20px;
+      background: yellowgreen;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="bar" class="progress">0%</div>
+  <button id="btn">setTimeout</button>
+  <button id="btn1">setInterval</button>
+  <button id="btn2">requestAnimationFrame</button>
+
+  <script>
+    // requestAnimationFrame
+    // 浏览器帧渲染的钩子函数，一般不渲染不触发
+    // 做动画比较合适因为这个函数在每帧渲染的开始与上一帧结束的时候触发，能最大限度的利用浏览器的渲染流程
+    // window.requestAnimationFrame() 告诉浏览器，你想执行一个动画，并且要求浏览器在下次重绘之前调用指定的回调函数更新动画
+
+    // requestAnimationFrame 优势：
+    // 1、使用setTimeout实现的动画，当页面被隐藏或最小化时，setTimeout 仍然在后台执行动画任务，由于此时页面处于不可见或不可用状态，刷新动画是没有意义的，完全是浪费CPU资源
+    // 2、而requestAnimationFrame则完全不同，当页面处理未激活的状态下，该页面的屏幕刷新任务也会被系统暂停，因此跟着系统步伐走的requestAnimationFrame也会停止渲染
+    // 3、当页面被激活时，动画就从上次停留的地方继续执行，有效节省了CPU开销。
+    // 4、函数节流：为了防止在一个刷新间隔内发生多次函数执行，使用requestAnimationFrame可保证每个刷新间隔内，函数只被执行一次，这样既能保证流畅性，也能更好的节省函数执行的开销
+    // 5、一个刷新间隔内函数执行多次时没有意义的，因为显示器每16.7ms刷新一次，多次绘制并不会在屏幕上体现出来。
+
+    // setTimeout 
+    // setTimeout这个方法的意思是在1000ms之后再执行do something,
+    // 但是如果1000ms 主线程不是空闲的，还是不能执行的，所以这个时间还是有可能延迟的；
+
+    // setInterval
+    // 时间间隔或许跳过
+    // 时间间隔可能小于定时调用代码的时间；
+    // 使用setTimeout，第一次执行完定时回调，全部执行完调用clearTimeout清除定时器
+
+    btn.onclick = function() {
+      console.time('setTimeout')
+      var progress = 0
+      var timer = setTimeout(function fn() {
+        progress++
+        if (progress <= 100) {
+          bar.style.width = progress + 'px'
+          bar.innerHTML = progress + '%'
+          timer = setTimeout(fn, 1000 / 60)
+        } else {
+          console.timeEnd('setTimeout')
+          clearTimeout(timer)
+        }
+      }, 1000 / 60)
+    }
+
+    // 使用setInterval，全部执行完调用clearInterval清除定时器
+    btn1.onclick = function() {
+      console.time('setInterval')
+      var progress = 0
+      var timer = setInterval(function fn() {
+        progress++
+        if (progress <= 100) {
+          bar.style.width = progress + 'px'
+          bar.innerHTML = progress + '%'
+        } else {
+          console.timeEnd('setInterval')
+          clearInterval(timer)
+        }
+      }, 1000 / 60)
+    }
+
+    // 使用requestAnimationFrame，用法与settimeout相似
+    // 第一次执行完调用requestAnimationFrame，但不需要设置时间，全部执行完调用cancelAnimationFrame
+    btn2.onclick = function() {
+      console.time('requestAnimationFrame')
+      var progress = 0
+      var timer = requestAnimationFrame(function fn() {
+        progress++
+        if (progress <= 100) {
+          bar.style.width = progress + 'px'
+          bar.innerHTML = progress + '%'
+          timer = requestAnimationFrame(fn)
+        } else {
+          console.timeEnd('requestAnimationFrame')
+          cancelAnimationFrame(timer)
+        }
+      })
+    }
+
+    // 理论动画时长约1666ms，setTimeout和setInterval设置60fps，requestAnimationFrame默认
+    // setTimeout: 1700.072021484375ms
+    // setInterval: 1617.007080078125ms
+    // requestAnimationFrame: 1664.283203125ms
+    // 结论：setTimeout和setInterval动画执行误差约20%-30%，requestAnimationFrame误差约1%
+  </script>
+</body>
+
+</html>
