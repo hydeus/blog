@@ -5,7 +5,7 @@ git remote add origin(对应远程仓库的主分支) [url]
 
 - 修改origin远程仓库
 ```
-git remote origin set-url [url]
+git remote set-url origin [url]
 ```
 
 - 删除origin远程仓库
