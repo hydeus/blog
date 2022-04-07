@@ -1,5 +1,5 @@
 // 将list转换为tree
-function array2tree(items) {
+function array2tree(data) {
   // 删除所有 children,以防止多次调用
   data.forEach(function(item) {
     delete item.children;
@@ -32,6 +32,6 @@ const data = [
   { id: 5, name: 'boss2', pid: 3 }
 ];
 
-const temp = array2tree(data)
+const temp = array2tree(data);
 
-console.log(temp)
+console.log(temp);

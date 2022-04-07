@@ -23,7 +23,7 @@
     <br>
     <scope-slot>
       <template #title><strong>3.这里是作用域插槽的title1</strong></template>
-      <template v-slot:default="slotProps">
+      <template v-slot="slotProps">
         <p>{{slotProps.child.text2}}</p>
       </template>
     </scope-slot>

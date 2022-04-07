@@ -11,7 +11,7 @@
 <body>
   <script>
     // 基本数据类型(存在栈中) Null Undefined Boolean String Number Symbol BigInt
-    // 引用数据类型(存在堆中) object
+    // 引用数据类型(存在堆中) object 引用类型数据的地址指针是存在栈中
 
     // typeof 检测返回对应的数据类型
     console.log(typeof true); // boolean
@@ -46,7 +46,8 @@
     // typeof 少null 多function
 
 
-    // instanceof 返回true || false 检测构造函数的prototype是否存在某个实例对象上 
+    // instanceof 返回true || false 
+    // 检测构造函数的prototype是否存在某个实例对象上
     // A instanceof B A对象是不是B实例化的对象
     console.log([] instanceof Array); // true
     console.log({} instanceof Object); // true
@@ -64,19 +65,18 @@
     // A instanceof B ===> true
     function _instanceof(A, B) {
       // 构造函数原型
-      const prototype = B.prototype;
+      B = B.prototype;
       // 实例对象属性，指向其构造函数原型
-      let __proto__ = A.__proto__;
+      A = A.__proto__;
       // 查实原型链
       while (true) {
         // 如果为null，说明原型链已经查找到最顶层了，直接返回false
-        if (__proto__ === null) return false;
+        if (A === null) return false;
         // 查找到原型
-        if (prototype === A) return true;
+        if (B === A) return true;
         // 继续向上查找
         A = A.__proto__;
       }
-      return A.__proto__ === B.prototype;
     }
 
     console.log(_instanceof(xiaoming, Person));

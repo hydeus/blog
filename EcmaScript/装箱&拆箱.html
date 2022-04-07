@@ -8,7 +8,35 @@
 </head>
 <body>
   <script>
-    
+    // 装箱
+      //  隐式装箱
+        let a = 'sumo';
+        let b = a.indexOf('o'); // 3
+        // 执行步骤
+        // let a = new String('sumo');
+        // let b = a.indexOf('o'); // 3
+        // a = null;
+        // 在上面的代码中，a是基本类型，它不是对象，不应该具有方法，js内部进行了一些列处理（装箱)， 使得它能够调用方法。
+        // 在这个基本类型上调用方法，其实是在这个基本类型对象上调用方法。
+        // 这个基本类型的对象是临时的，它只存在于方法调用那一行代码执行的瞬间，执行方法后立刻被销毁。
+        // 实现机制
+          // 创建String类型的一个实例；
+          // 在实例上调用指定的方法；
+          // 销毁这个实例；
+
+      // 显式装箱，通过内置对象可以对Boolean、Object、String等可以对基本类型显示装箱
+        let c  = new String('sumo');
+
+    // 拆箱：拆箱和装箱相反，就是把引用类型转化为基本类型的数据，通常通过引用类型的valueof和toString
+      let name = new String('sumo');
+      let age = new Number(18);
+
+      // 拆箱操作
+      console.log(typeof name.valueOf());
+      console.log(typeof age.valueOf());
+      console.log(typeof name.toString());
+      console.log(typeof age.toString());
+
   </script>
 </body>
 </html>

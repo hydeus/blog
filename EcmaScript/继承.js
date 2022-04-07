@@ -2,8 +2,9 @@
  * JS继承
  * 
  * https://zhuanlan.zhihu.com/p/72914477
- * 1. 原型链继续
- * 2. 构造函数继承
+ * https://www.jianshu.com/p/90f95be9236a
+ * 1. 原型链继续：将子类的原型链指向父类的对象实例
+ * 2. 构造函数继承：call aplly bind
  * 3. 组合继承（原型链继承和构造函数继承的组合）
  * 4. 原型式继续
  * 5. 寄生式继承
@@ -24,7 +25,6 @@ var person = new Person('sumo');
 person.sayHello();
 
 
-// 原型链继承
 function Child() {
   this.name = 'child';
 }

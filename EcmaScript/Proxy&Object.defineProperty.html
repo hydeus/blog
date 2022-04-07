@@ -30,6 +30,9 @@
       set(target, key, value, receiver) {
         console.log('set', key, value)
         return Reflect.set(target, key, value, receiver)
+      },
+      deleteProperty(target, key) {
+        return Reflect.deleteProperty(target, key)
       }
     })
     proxy1.name = 'Zoe' // set name Zoe
@@ -47,6 +50,9 @@
       set(target, key, value, receiver) {
         console.log('set', key, value)
         return Reflect.set(target, key, value, receiver)
+      },
+      deleteProperty(target, key) {
+        return Reflect.deleteProperty(target, key)
       }
     })
     proxy2.push(4);
@@ -73,6 +79,9 @@
       set(target, key, value, receiver) {
         console.log('set', key, value)
         return Reflect.set(target, key, value, receiver)
+      },
+      deleteProperty(target, key) {
+        return Reflect.deleteProperty(target, key)
       }
     }
     let proxy3 = new Proxy(obj02, handler)
