@@ -35,6 +35,21 @@ try {
   }).catch(err => {
     console.log('2=====' + err);
   })
-} catch(err) {
+} catch (err) {
   console.log('3=====' + err);
+}
+
+
+
+// 模拟promise.race
+Promise.myRace = function(promises) {
+  return new Promise(function(resolve, reject) {
+    for (var i = 0, len = promises.length; i < len; i++) {
+      Promise.resolve(promises[i]).then(res => {
+        resolve(res);
+      }).catch(err => {
+        reject(err);
+      })
+    }
+  })
 }
