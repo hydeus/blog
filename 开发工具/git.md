@@ -3,6 +3,11 @@
 git remote add origin(对应远程仓库的主分支) [url]
 ```
 
+- 删除git缓存
+```
+git rm -r --cached .
+```
+
 - 修改origin远程仓库
 ```
 git remote set-url origin [url]
