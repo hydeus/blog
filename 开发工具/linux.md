@@ -25,3 +25,13 @@ iptables -D INPUT 1(删除第一条规则，INPUT)
 useradd xxx(添加用户)
 passwd xxx(给用户设置密码)
 ```
+
+```
+根据端口号查进程
+lsof -i:3000
+```
+
+```
+根据PID查启动文件
+ll /proc/:PID
+```
