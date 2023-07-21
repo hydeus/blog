@@ -12,7 +12,7 @@ docker images
 
 - 构建镜像
 ```
-docker build -it xxx(自定义镜像名) .
+docker build -t xxx(自定义镜像名) .
 ```
 
 - 运行镜像
