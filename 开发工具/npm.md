@@ -4,7 +4,7 @@ npm config get registry
 ```
 - 设置npm仓库源
 ```taobao
-npm config set registry https://registry.npmjs.org
+npm config set registry https://registry.npmmirror.com
 ```
 ```官方
 npm config set registry https://registry.npmjs.org
@@ -27,5 +27,5 @@ npm install xx --save-dev 安装XX到开发环境依赖
 ```
 - 本次安装从淘宝镜像安装
 ```
-npm install --registry=https://registry.npmjs.org
+npm install --registry=https://registry.npmmirror.com
 ```
