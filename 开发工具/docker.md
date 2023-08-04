@@ -49,3 +49,13 @@ docker run -d(后台运行) -p 主机端口:容器端口 xxx(自定义镜像名)
 ```
 docker exec -it xxx(容器ID，上一步运行镜像会返回容器ID或docker ps可以查看到) /bin/bash(在容器中开启交互模式的终端)
 ```
+
+- 将本地镜像导出
+```
+docker save -o xxx/xxx.tar(全路径，好找点，不然就放在执行命令目录下) 本地镜像ID/镜像名:tagname
+```
+
+- 将本地镜像导入到其他主机
+```
+docker load -i xxx/xxx.tar
+```
