@@ -39,3 +39,9 @@ cat ~/.ssh/id_rsa.pub
 ```
 ssh-keygen -t rsa -C "wuyfnet@gmail.com"
 ```
+
+- 合并某一次提交
+```
+git cherry-pick xxx
+git push
+```
