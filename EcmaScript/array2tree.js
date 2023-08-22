@@ -24,6 +24,12 @@ function array2tree(data) {
   return val;
 }
 
+function arrayToTree(data, pid) {
+  return data
+    .filter((item) => item.pid === pid)
+    .map((item) => ({ ...item, children: arrayToTree(data, item.id) }));
+}
+
 const data = [
   { id: 1, name: 'boss', pid: 0 },
   { id: 2, name: 'lily', pid: 1 },
@@ -35,3 +41,4 @@ const data = [
 const temp = array2tree(data);
 
 console.log(temp);
+console.log(arrayToTree(data, 0));
